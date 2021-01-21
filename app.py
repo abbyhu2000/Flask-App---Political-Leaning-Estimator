@@ -2,29 +2,23 @@ from flask import Flask, render_template, url_for, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/', methods=['POST','GET'])
+@app.route('/', methods=['GET','POST'])
 def index():
     return render_template('base.html')
 
-@app.route('/background_process', methods=['POST', 'GET'])
+@app.route('/background_process', methods=['GET'])
 def background_process():
-    slider1value = float(request.args.get('slider1value'))
-    slider2value = float(request.args.get('slider2value'))
-    slider3value = float(request.args.get('slider3value'))
-    slider4value = float(request.args.get('slider4value'))
-    slider5value = float(request.args.get('slider5value'))
-    slider1original = float(request.args.get('slider1original'))
-    slider2original = float(request.args.get('slider2original'))
-    slider3original = float(request.args.get('slider3original'))
-    slider4original = float(request.args.get('slider4original'))
-    slider5original = float(request.args.get('slider5original'))
-    source1 = float(request.args.get('source1'))
-    source2 = float(request.args.get('source2'))
-    source3 = float(request.args.get('source3'))
-    source4 = float(request.args.get('source4'))
-    source5 = float(request.args.get('source5'))
-    print(request.args)
-    pred = (slider1value-slider1original)*source1+(slider2value-slider2original)*source2+(slider3value-slider3original)*source3+(slider4value-slider4original)*source4+(slider5value-slider5original)*source5
+    number_of_slider = 5
+    slider_upated = []
+    slider_original = [0, 0.75, 1, 0, 0.5]
+    source = [1, 0.5, -0.5, -1, 0]
+    pred = 0
+    for i in range(number_of_slider):
+        curr_slider = "slider"+str(i+1)+"value"
+        #slider_upated.append(float(request.args.get(curr_slider)))
+        curr_value = float(request.args.get(curr_slider))
+        pred += (curr_value-slider_original[i])*source[i]
+   
 
     print(pred)
     

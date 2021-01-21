@@ -300,12 +300,6 @@
 
 </body>
 <script>
-    //function that's updating predictions
-    function update_mainslider(prediction_value) {
-        $("#main_value").html(prediction_value)
-        $("#total_range").val(prediction_value)
-    }
-
     var total_range = $("#total_range");
     $("#main_value").html(total_range.val());
 
@@ -341,6 +335,12 @@
         $("#slider5value").html(slider5.val());
     })
 
+    //function that's updating predictions
+    function update_mainslider(prediction_value) {
+        $("#main_value").html(prediction_value)
+        $("#total_range").val(prediction_value)
+    }
+
     //fetch data and send to the server
     function fetchdata() {
         $.getJSON({
@@ -351,26 +351,16 @@
                 'slider2value': $("#slider2value").html(),
                 'slider3value': $("#slider3value").html(),
                 'slider4value': $("#slider4value").html(),
-                'slider5value': $("#slider5value").html(),
-                'slider1original': '0',
-                'slider2original': '0.75',
-                'slider3original': '1',
-                'slider4original': '0',
-                'slider5original': '0.5',
-                'source1': '1',
-                'source2': '0.5',
-                'source3': '-0.5',
-                'source4': '-1',
-                'source5': '0'
+                'slider5value': $("#slider5value").html()
             },
             success: function (data) {
                 update_mainslider(data.prediction_value)
             }
         })
     }
-
+    //console.log($('#main_value').html())
     //event listener
-    $(document).mouseup(function () { fetchdata() })
+    //$(document).mouseup(function () { fetchdata() })
     $(document).on('change', function () { fetchdata() })
 
     //hover effect
