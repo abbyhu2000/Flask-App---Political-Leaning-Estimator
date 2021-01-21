@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        .body_text {
+            font-family: Arial;
+            font-weight: normal;
+
+        }
+
+        /* The slider itself */
+        .slider {
+            -webkit-appearance: none;
+            /* Override default CSS styles */
+            appearance: none;
+            width: 100%;
+            /* Full-width */
+            height: 25px;
+            /* Specified height */
+            background: #d3d3d3;
+            /* Grey background */
+            border-radius: 10px;
+            /* Round border*/
+            outline: none;
+            /* Remove outline */
+            opacity: 0.7;
+            /* Set transparency (for mouse-over effects on hover) */
+            -webkit-transition: .2s;
+            /* 0.2 seconds transition on hover */
+            transition: opacity .2s;
+        }
+
+        /* Mouse-over effects */
+        .slider:hover {
+            opacity: 1;
+            /* Fully shown on mouse-over */
+        }
+
+        /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            /* Override default look */
+            appearance: none;
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: #797986;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
+
+        /* Tooltip container */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+            /* If you want dots under the hoverable text */
+        }
+
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+
+            /* Position the tooltip text */
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+
+            /* Fade in tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Tooltip arrow */
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+
+<body>
+    <main class="container mt-5">
+        <h5 class="text-center mb-5 fw-light" style="color:#C36900">(Click or hover over <i
+                class="fa fa-question-circle"></i> for help)</h5>
+        <h4 class="text-center text-orange fw-normal" style="color:#C36900">Overall Political Leaning
+
+            <a href="#" data-toggle="popover" data-trigger="focus hover" data-title="Estimated Bias"
+                data-content="Based on the user's interaction with the source reputation, we estimate the political bias of the user and vice versa">
+                <i class="fa fa-question-circle" style="font-size:24px; color:black"></i>
+            </a>
+
+        </h4>
+
+
+        <table width="100%" class="mt-4">
+            <tbody>
+                <tr>
+                    <td style="color:#C36900;">
+                        Literal
+                    </td>
+                    <td style="color:#C36900; text-align: right;">
+                        Conservative
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+        <div>
+            <input type="range" class="slider" id="total_range" min="-1" max="1" step="0.01" value="0" disabled>
+            <label>Estimated Leaning Index: <span id="main_value"></span> from -1 to 1</label>
+        </div>
+        <div class="col-10 offset-1 mt-5 mb-7">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="color:#C36900" width="30%">News Source
+                            <a href="#" data-toggle="popover" data-trigger="focus hover" data-title="Source"
+                                data-content="The website that publishes the article">
+                                <i class="fa fa-question-circle" style="color: black"></i>
+                            </a>
+
+                        </th>
+
+                        <th scope="col" style="color:#C36900" width="30%">Source Political Leaning
+                            <a href="#" data-toggle="popover" data-trigger="focus hover" data-title="Source Bias"
+                                data-content="We predicted the bias of the source(left means Liberal, middle means Neutral, right means high Conservative, click to sort)">
+                                <i class="fa fa-question-circle" style="color: black"></i>
+                            </a>
+                        </th>
+
+                        <th scope="col" style="color:#C36900" width="30%">Source Reputation
+                            <a href="#" data-toggle="popover" data-trigger="focus hover"
+                                data-title="Predicted Reputation"
+                                data-content="We predicted the reputation of the source(left means low, middle means unknown, right means high reputation, click to sort)">
+                                <i class="fa fa-question-circle" style="color: black"></i>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>abc.com</td>
+                        <td>
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td>Liberal</td>
+                                        <td style="text-align: right;">Conservative</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <input type="range" class="form-range mt-4" id="disabledRange1" min="-1" max="1" value="1"
+                                step="0.5" disabled>
+                        </td>
+                        <td>
+                            <div>
+                                <label class="body_text">Reputation index:<span id="slider1value"></span>/1</label>
+                                <input type="range" class="form-range mt-3" id="slider1" min="0" max="1" step="0.25"
+                                    value="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>lion.com</td>
+                        <td>
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td>Liberal</td>
+                                        <td style="text-align: right;">Conservative</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input type="range" class="form-range mt-4" id="disabledRange2" min="-1" max="1" value="0.5"
+                                step="0.5" disabled>
+                        </td>
+                        <td>
+                            <div>
+                                <label class="body_text">Reputation index:<span id="slider2value"></span>/1</label>
+                                <input type="range" class="form-range mt-3" id="slider2" min="0" max="1" step="0.25"
+                                    value="0.75">
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>xyz.com</td>
+                        <td>
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td>Liberal</td>
+                                        <td style="text-align: right;">Conservative</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input type="range" class="form-range mt-4" id="disabledRange3" min="-1" max="1"
+                                value="-0.5" step="0.5" disabled>
+                        </td>
+                        <td>
+                            <div>
+                                <label class="body_text">Reputation index:<span id="slider3value"></span>/1</label>
+                                <input type="range" class="form-range mt-3" id="slider3" min="0" max="1" step="0.25"
+                                    value="1">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>politexas.com</td>
+                        <td>
+                            <div>
+                                <table style="width:100%">
+                                    <tbody>
+                                        <tr>
+                                            <td>Liberal</td>
+                                            <td style="text-align: right;">Conservative</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type="range" class="form-range mt-4" id="disabledRange4" min="-1" max="1"
+                                    value="-1" step="0.5" disabled>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <label class="body_text">Reputation index:<span id="slider4value"></span>/1</label>
+                                <input type="range" class="form-range mt-3" id="slider4" min="0" max="1" step="0.25"
+                                    value="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>usp.com</td>
+                        <td>
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td>Liberal</td>
+                                        <td style="text-align: right;">Conservative</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input type="range" class="form-range mt-4" id="disabledRange5" min="-1" max="1" value="0"
+                                step="0.5" disabled>
+                        </td>
+                        <td>
+                            <div>
+                                <label class="body_text">Reputation index:<span id="slider5value"></span>/1</label>
+                                <input type="range" class="form-range mt-3" id="slider5" min="0" max="1" step="0.25"
+                                    value="0.5">
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+
+</body>
+<script>
+    //function that's updating predictions
+    function update_mainslider(prediction_value) {
+        $("#main_value").html(prediction_value)
+        $("#total_range").val(prediction_value)
+    }
+
+    var total_range = $("#total_range");
+    $("#main_value").html(total_range.val());
+
+
+    //create slider objects and detect movement
+    var slider1 = $("#slider1");
+    $("#slider1value").html(slider1.val());
+    slider1.change(function () {
+        $("#slider1value").html(slider1.val());
+    })
+
+    var slider2 = $("#slider2");
+    $("#slider2value").html(slider2.val());
+    slider2.change(function () {
+        $("#slider2value").html(slider2.val());
+    })
+
+    var slider3 = $("#slider3");
+    $("#slider3value").html(slider3.val());
+    slider3.change(function () {
+        $("#slider3value").html(slider3.val());
+    })
+
+    var slider4 = $("#slider4");
+    $("#slider4value").html(slider4.val());
+    slider4.change(function () {
+        $("#slider4value").html(slider4.val());
+    })
+
+    var slider5 = $("#slider5");
+    $("#slider5value").html(slider5.val());
+    slider5.change(function () {
+        $("#slider5value").html(slider5.val());
+    })
+
+    //fetch data and send to the server
+    function fetchdata() {
+        $.getJSON({
+            type: "GET",
+            url: '/background_process',
+            data: {
+                'slider1value': $("#slider1value").html(),
+                'slider2value': $("#slider2value").html(),
+                'slider3value': $("#slider3value").html(),
+                'slider4value': $("#slider4value").html(),
+                'slider5value': $("#slider5value").html(),
+                'slider1original': '0',
+                'slider2original': '0.75',
+                'slider3original': '1',
+                'slider4original': '0',
+                'slider5original': '0.5',
+                'source1': '1',
+                'source2': '0.5',
+                'source3': '-0.5',
+                'source4': '-1',
+                'source5': '0'
+            },
+            success: function (data) {
+                update_mainslider(data.prediction_value)
+            }
+        })
+    }
+
+    //event listener
+    $(document).mouseup(function () { fetchdata() })
+    $(document).on('change', function () { fetchdata() })
+
+    //hover effect
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+        $('.progress').popover({
+            html: true,
+            content: function () {
+                return
+            }
+        })
+    });
+</script>
+
+</html>
